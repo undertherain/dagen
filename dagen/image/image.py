@@ -2,6 +2,8 @@ import numpy as np
 import skimage
 import skimage.draw
 import random
+import PIL
+import PIL.Image
 
 
 def draw_box(y, x, r):
@@ -29,13 +31,23 @@ def gen_item(cl, test=False):
     return a
 
 
+def merge_sample(X, Y):
+    bar = np.ones([X.shape[1], 2])
+    im_ar = np.hstack([np.hstack([X[i], bar]) for i in range(4)])
+    im = PIL.Image.fromarray(im_ar * 255)
+    if im.mode != 'RGB':
+        im = im.convert('RGB')
+    return im
+
+
 def main():
     print("generating sample output")
     cnt_samples = 10
     X_train = np.array([gen_item(i % 2) for i in range(cnt_samples)])
     Y_train = np.array([i % 2 for i in range(cnt_samples)], dtype=np.int32)
     print(X_train.shape, Y_train.shape)
-
+    im = merge_sample(X_train, Y_train)
+    im.save("/tmp/test.png")
 
 if __name__ == "__main__":
     main()
