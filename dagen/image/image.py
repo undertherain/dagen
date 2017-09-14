@@ -4,6 +4,7 @@ import skimage.draw
 import random
 import PIL
 import PIL.Image
+import contextfree
 
 
 def draw_box(y, x, r):
