@@ -5,6 +5,9 @@ import random
 import PIL
 import PIL.Image
 import contextfree
+from contextfree import contextfree as cf
+
+dim_image = 64
 
 
 def draw_box(y, x, r):
@@ -12,8 +15,15 @@ def draw_box(y, x, r):
     return rr, cc
 
 
+def get_circle():
+    cf.init(canvas_size = (dim_image, dim_image), face_color="#FFFFFF")
+    with cf.translate(cf.rnd(1), cf.rnd(1)):
+        cf.circle(0.5 * cf.rnd(1) + 0.5)
+    a = cf.get_npimage()
+    return a[:, :, 0]
+
+
 def gen_item(cl, test=False):
-    dim_image = 64
     a = np.zeros([dim_image, dim_image], dtype=np.float32)
     radius = 12
     min_radius = 6
@@ -24,8 +34,9 @@ def gen_item(cl, test=False):
     yc_random = int(random.random() * (dim_image - radius * 2) + radius)
     r = int(random.random() * (min_radius) + radius-min_radius)
     if cl == 0:
-        rr, cc = skimage.draw.circle_perimeter(yc_random, xc_random, r)
-        a[rr, cc] = 1
+        #rr, cc = skimage.draw.circle_perimeter(yc_random, xc_random, r)
+        #a[rr, cc] = 1
+        a = get_circle()
     else:
         rr, cc = draw_box(yc_random, xc_random, r)
         a[rr, cc] = 1
