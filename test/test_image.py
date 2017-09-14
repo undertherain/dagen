@@ -3,12 +3,6 @@ import unittest
 import numpy as np
 from dagen.image.image import gen_item, merge_sample
 
-# todo: use local vocab
-path_vocab = "./test/data/vocabs/plain"
-path_text = "./test/data/corpora/plain"
-path_gzipped = "./test/data/corpora/gzipped"
-path_text_file = "./test/data/corpora/plain/sense_small.txt"
-
 
 class Tests(unittest.TestCase):
 
