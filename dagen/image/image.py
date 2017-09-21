@@ -1,6 +1,4 @@
 import numpy as np
-import skimage
-import skimage.draw
 import random
 import PIL
 import PIL.Image
