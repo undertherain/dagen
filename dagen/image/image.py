@@ -4,21 +4,23 @@ import skimage.draw
 import random
 import PIL
 import PIL.Image
-import contextfree
 from contextfree import contextfree as cf
 
 dim_image = 64
 
 
-def draw_box(y, x, r):
-    rr, cc = skimage.draw.polygon_perimeter([y+r, y-r, y-r, y+r], [x-r, x-r, x+r, x+r])
-    return rr, cc
+def get_box():
+    cf.init(canvas_size=(dim_image, dim_image), face_color="#FFFFFF")
+    with cf.translate(cf.rnd(1), cf.rnd(1)):
+        cf.box(cf.rnd(0.5) + 0.75)
+    a = cf.get_npimage()
+    return a[:, :, 0]
 
 
 def get_circle():
-    cf.init(canvas_size = (dim_image, dim_image), face_color="#FFFFFF")
+    cf.init(canvas_size=(dim_image, dim_image), face_color="#FFFFFF")
     with cf.translate(cf.rnd(1), cf.rnd(1)):
-        cf.circle(0.5 * cf.rnd(1) + 0.5)
+        cf.circle(0.5 + cf.rnd(0.5))
     a = cf.get_npimage()
     return a[:, :, 0]
 
@@ -34,18 +36,15 @@ def gen_item(cl, test=False):
     yc_random = int(random.random() * (dim_image - radius * 2) + radius)
     r = int(random.random() * (min_radius) + radius-min_radius)
     if cl == 0:
-        #rr, cc = skimage.draw.circle_perimeter(yc_random, xc_random, r)
-        #a[rr, cc] = 1
         a = get_circle()
     else:
-        rr, cc = draw_box(yc_random, xc_random, r)
-        a[rr, cc] = 1
+        a = get_box()
     return a
 
 
-def merge_sample(X, Y):
+def merge_sample(X, Y, cnt_sampes=10):
     bar = np.ones([X.shape[1], 2])
-    im_ar = np.hstack([np.hstack([X[i], bar]) for i in range(4)])
+    im_ar = np.hstack([np.hstack([X[i], bar]) for i in range(cnt_sampes)])
     im = PIL.Image.fromarray(im_ar * 255)
     if im.mode != 'RGB':
         im = im.convert('RGB')
