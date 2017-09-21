@@ -1,2 +1,2 @@
 # dagen
-syntetic data generation for deep learning
+syntetic data generation for deep learning experiments
