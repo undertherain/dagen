@@ -61,6 +61,22 @@ def merge_samples(X, Y, cnt_sampes=10):
     return im
 
 
+def get_ds_simple(cnt_samples=100):
+    data = []
+    labels = []
+    for i in range(cnt_samples):
+        if i % 2:
+            data.append(get_box())
+            labels.append(0)
+        else:
+            data.append(get_circle())
+            labels.append(1)
+
+    X = np.array(data)
+    Y = np.array(labels, dtype=np.int32)
+    return X, Y
+
+
 def get_ds_counting():
     data = []
     cnts = []
