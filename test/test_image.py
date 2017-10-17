@@ -13,7 +13,7 @@ class Tests(unittest.TestCase):
         Y_train = np.array([i % 2 for i in range(cnt_samples)], dtype=np.int32)
         print(X_train.shape, Y_train.shape)
         im = merge_samples(X_train, Y_train)
-        im.save("/tmp/test.png")
+        im.save("/tmp/test_legacy.png")
 
     def test_counting(self):
         X_train, Y_train = get_ds_counting()
@@ -26,3 +26,11 @@ class Tests(unittest.TestCase):
         print(X_train.shape, Y_train.shape)
         im = merge_samples(X_train, Y_train)
         im.save("/tmp/simple.png")
+
+    def test_merge_w_channels(self):
+        X_train, Y_train = get_ds_simple(cnt_samples=10)
+        X_train = np.expand_dims(X_train, axis=1).astype(np.float32) / 255
+        Y_train = Y_train[:, np.newaxis]
+        print(X_train.shape, Y_train.shape)
+        im = merge_samples(X_train, Y_train)
+        im.save("/tmp/simple_channel.png")

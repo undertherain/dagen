@@ -55,10 +55,16 @@ def gen_item(label, test=False):
 def merge_samples(X, Y, cnt_sampes=10):
     if len(X.shape) == 3:
         bar = np.ones([X.shape[1], 2])
+        im_ar = np.hstack([np.hstack([X[i], bar]) for i in range(cnt_sampes)])
     else:
-        bar = np.ones([1, X.shape[1], 2])
-    im_ar = np.hstack([np.hstack([X[i], bar]) for i in range(cnt_sampes)])
-    im = PIL.Image.fromarray(im_ar * 255)
+        bar = np.ones([1, X.shape[2], 2])
+        im_ar = np.dstack([np.dstack([X[i], bar]) for i in range(cnt_sampes)])
+        im_ar = np.rollaxis(im_ar, 0, 3)
+        if im_ar.shape[-1] == 1:
+            im_ar = im_ar[:, :, 0]
+
+    im_ar *= 255
+    im = PIL.Image.fromarray(im_ar)
     if im.mode != 'RGB':
         im = im.convert('RGB')
     return im
