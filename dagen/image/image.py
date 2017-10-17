@@ -53,7 +53,10 @@ def gen_item(label, test=False):
 
 
 def merge_samples(X, Y, cnt_sampes=10):
-    bar = np.ones([X.shape[1], 2])
+    if len(X.shape) == 3:
+        bar = np.ones([X.shape[1], 2])
+    else:
+        bar = np.ones([1, X.shape[1], 2])
     im_ar = np.hstack([np.hstack([X[i], bar]) for i in range(cnt_sampes)])
     im = PIL.Image.fromarray(im_ar * 255)
     if im.mode != 'RGB':
