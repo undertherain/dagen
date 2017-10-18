@@ -1,6 +1,7 @@
 
 import unittest
 import numpy as np
+import dagen.image
 from dagen.image.image import gen_item, merge_samples, get_ds_counting, get_ds_simple
 
 
@@ -34,3 +35,9 @@ class Tests(unittest.TestCase):
         print(X_train.shape, Y_train.shape)
         im = merge_samples(X_train, Y_train)
         im.save("/tmp/simple_channel.png")
+
+    def test_size(self):
+        X_train, Y_train = get_ds_simple(dim_image=128, cnt_samples=10)
+        print(X_train.shape, Y_train.shape)
+        im = merge_samples(X_train, Y_train)
+        im.save("/tmp/size128.png")

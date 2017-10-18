@@ -3,10 +3,8 @@ import PIL
 import PIL.Image
 from contextfree import contextfree as cf
 
-dim_image = 64
 
-
-def get_box():
+def get_box(dim_image=64):
     cf.init(canvas_size=(dim_image, dim_image), face_color="#FFFFFF")
     with cf.translate(cf.rnd(0.5), cf.rnd(0.5)):
         cf.box(cf.rnd(0.5) + 0.4)
@@ -14,7 +12,7 @@ def get_box():
     return a[:, :, 0]
 
 
-def get_circle():
+def get_circle(dim_image=64):
     cf.init(canvas_size=(dim_image, dim_image), face_color="#FFFFFF")
     with cf.translate(cf.rnd(0.5), cf.rnd(0.5)):
         cf.circle(0.25 + cf.rnd(0.2))
@@ -22,7 +20,7 @@ def get_circle():
     return a[:, :, 0]
 
 
-def get_counting_sample():
+def get_counting_sample(dim_image=64):
     cf.init(canvas_size=(dim_image, dim_image), face_color="#FFFFFF")
     cnt_circles = 0
     cnt_boxes = 0
@@ -70,15 +68,15 @@ def merge_samples(X, Y, cnt_sampes=10):
     return im
 
 
-def get_ds_simple(cnt_samples=100):
+def get_ds_simple(dim_image=64, cnt_samples=100):
     data = []
     labels = []
     for i in range(cnt_samples):
         if i % 2:
-            data.append(get_box())
+            data.append(get_box(dim_image=dim_image))
             labels.append(0)
         else:
-            data.append(get_circle())
+            data.append(get_circle(dim_image=dim_image))
             labels.append(1)
 
     X = np.array(data)
