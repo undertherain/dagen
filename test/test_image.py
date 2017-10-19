@@ -2,7 +2,7 @@
 import unittest
 import numpy as np
 import dagen.image
-from dagen.image.image import gen_item, merge_samples, get_ds_counting, get_ds_simple
+from dagen.image.image import gen_item, merge_samples, get_ds_counting, get_ds_simple, get_ds_naive
 
 
 class Tests(unittest.TestCase):
@@ -27,6 +27,12 @@ class Tests(unittest.TestCase):
         print(X_train.shape, Y_train.shape)
         im = merge_samples(X_train, Y_train)
         im.save("/tmp/simple.png")
+
+    def test_naive(self):
+        X_train, Y_train = get_ds_naive(cnt_samples=10)
+        print(X_train.shape, Y_train.shape)
+        im = merge_samples(X_train, Y_train)
+        im.save("/tmp/naive.png")
 
     def test_merge_w_channels(self):
         X_train, Y_train = get_ds_simple(cnt_samples=10)

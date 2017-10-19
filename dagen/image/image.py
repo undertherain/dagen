@@ -68,6 +68,25 @@ def merge_samples(X, Y, cnt_sampes=10):
     return im
 
 
+def get_ds_naive(dim_image=64, cnt_samples=100):
+    data = []
+    labels = []
+
+    for i in range(cnt_samples):
+        cf.init(canvas_size=(dim_image, dim_image), face_color="#FFFFFF")
+        if i % 2:
+            cf.circle(0.3)
+            labels.append(0)
+        else:
+            cf.box(0.5)
+            labels.append(1)
+        a = cf.get_npimage()
+        data.append(a[:, :, 0])
+    X = np.array(data)
+    Y = np.array(labels, dtype=np.int32)
+    return X, Y
+
+
 def get_ds_simple(dim_image=64, cnt_samples=100):
     data = []
     labels = []
