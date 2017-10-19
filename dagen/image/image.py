@@ -103,10 +103,10 @@ def get_ds_simple(dim_image=64, cnt_samples=100):
     return X, Y
 
 
-def get_ds_counting():
+def get_ds_counting(cnt_samples=100):
     data = []
     cnts = []
-    for i in range(10):
+    for i in range(cnt_samples):
         a, c, b = get_counting_sample()
         data.append(a)
         cnts.append([c, b])
